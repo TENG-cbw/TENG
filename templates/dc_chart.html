@@ -1,0 +1,816 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+
+{% block content %}
+    <div class="container">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">折线图</div>
+            <div class="panel-body">
+                <img src="/static/img/2.png" style="width: 100%;height: 600px;text-align: center;" />
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">Voltage</div>
+            <div class="panel-body">
+                <div id="m1" style="width: 100%;height: 600px"></div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">Current</div>
+            <div class="panel-body">
+                <div id="m2" style="width: 100%;height: 600px"></div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">Current Density</div>
+            <div class="panel-body">
+                <div id="m2d" style="width: 100%;height: 600px"></div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">Charge</div>
+            <div class="panel-body">
+                <div id="m3" style="width: 100%;height: 600px"></div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">Charge Density</div>
+            <div class="panel-body">
+                <div id="m3d" style="width: 100%;height: 600px"></div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">Power</div>
+            <div class="panel-body">
+                <div id="m4" style="width: 100%;height: 600px"></div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/echarts.js' %}"></script>
+    <script type="text/javascript">
+
+        $(function () {
+
+            initVoltage();
+            initCurrent();
+            initCurrentDensity();
+            initCharge();
+            initChargeDensity();
+            initPower();
+
+
+
+        })
+
+
+        /**
+         * dc电压图
+         */
+        function initVoltage() {
+            var myChart = echarts.init(document.getElementById('m1'));
+            var option = {
+
+                 tooltip: {
+                            // trigger: 'axis',
+                            showDelay: 0,
+                            formatter: function (params) {
+                              if (params.value.length > 1) {
+                                return (
+                                  params.seriesName +
+                                  ' :<br/>' +
+                                  +params.value[1] +'V '+ '<br>'
+                                  +params.value[2] + '<br>'
+                                  +params.value[3] + '<br>'
+                                  +params.value[4] + '<br>'
+                                  +params.value[5] + '<br>'
+
+                                );
+                              } else {
+                                return (
+                                  params.seriesName
+
+                                );
+                              }
+                            },
+
+                 },
+                 toolbox: {
+                            feature: {
+                              dataZoom: {},
+                              brush: {
+                                type: ['rect', 'polygon', 'clear']
+                              }
+                            }
+                 },
+                dataZoom: [
+                {
+                  type: 'slider',
+                  show: true,
+                  xAxisIndex: [0],
+
+                  start: 1,
+                  end: 100
+                },
+                {
+                  type: 'slider',
+                  show: true,
+                  yAxisIndex: [0],
+                  left: '96%',
+                  start: 1,
+                  end: 100
+                },
+                {
+                  type: 'inside',
+                  xAxisIndex: [0],
+                  start: 1,
+                  end: 6
+                },
+                {
+                  type: 'inside',
+                  yAxisIndex: [0],
+                  start: 29,
+                  end: 36
+                }
+              ],
+
+              legend: {
+                    data: [],
+                    top: 0
+               },
+
+              xAxis: [
+                    {
+                      type: 'value',
+                      scale: true,
+                      name: 'Date',
+                      nameGap: 5,
+                      nameTextStyle: {
+                              fontSize: 16
+                      },
+
+
+                    }
+              ],
+              yAxis: [
+                    {
+                      type: 'value',
+                      scale: true,
+                      name: 'Voltage',
+                      nameGap: 50,
+                      nameLocation: 'middle',
+                      nameTextStyle: {
+                              fontSize: 16
+                      },
+
+
+                    }
+              ],
+              series: []
+            };
+
+
+            $.ajax({
+                url: '/dc/voltage/',
+                type: "get",
+                dataType: "JSON",
+                success: function (res) {
+                    if (res.status) {
+                        option.legend.data = res.data.legend;
+                        option.series = res.data.series_list;
+
+                        myChart.setOption(option);
+                    }
+                }
+            })
+
+
+        }
+
+
+        /**
+         * dc电流
+         */
+        function initCurrent() {
+            var myChart = echarts.init(document.getElementById('m2'));
+            var option = {
+
+                 tooltip: {
+                            // trigger: 'axis',
+                            showDelay: 0,
+                            formatter: function (params) {
+                              if (params.value.length > 1) {
+                                return (
+                                  params.seriesName +
+                                  ' :<br/>' +
+                                  +params.value[1] +'V '+ '<br>'
+                                  +params.value[2] + '<br>'
+                                  +params.value[3] + '<br>'
+                                  +params.value[4] + '<br>'
+                                  +params.value[5] + '<br>'
+
+                                );
+                              } else {
+                                return (
+                                  params.seriesName
+
+                                );
+                              }
+                            },
+
+                 },
+                 toolbox: {
+                            feature: {
+                              dataZoom: {},
+                              brush: {
+                                type: ['rect', 'polygon', 'clear']
+                              }
+                            }
+                 },
+                dataZoom: [
+                {
+                  type: 'slider',
+                  show: true,
+                  xAxisIndex: [0],
+
+                  start: 1,
+                  end: 100
+                },
+                {
+                  type: 'slider',
+                  show: true,
+                  yAxisIndex: [0],
+                  left: '96%',
+                  start: 1,
+                  end: 100
+                },
+                {
+                  type: 'inside',
+                  xAxisIndex: [0],
+                  start: 1,
+                  end: 6
+                },
+                {
+                  type: 'inside',
+                  yAxisIndex: [0],
+                  start: 29,
+                  end: 36
+                }
+              ],
+
+              legend: {
+                    data: [],
+                    top: 0
+               },
+
+              xAxis: [
+                    {
+                      type: 'value',
+                      scale: true,
+                      name: 'Date',
+                      nameGap: 5,
+                      nameTextStyle: {
+                              fontSize: 16
+                      },
+
+
+                    }
+              ],
+              yAxis: [
+                    {
+                      type: 'value',
+                      scale: true,
+                      name: 'Current',
+                      nameGap: 50,
+                      nameLocation: 'middle',
+                      nameTextStyle: {
+                              fontSize: 16
+                      },
+
+
+                    }
+              ],
+              series: []
+            };
+
+
+            $.ajax({
+                url: '/dc/current/',
+                type: "get",
+                dataType: "JSON",
+                success: function (res) {
+                    if (res.status) {
+                        option.legend.data = res.data.legend;
+                        option.series = res.data.series_list;
+
+                        myChart.setOption(option);
+                    }
+                }
+            })
+
+
+        }
+
+        /**
+         * sl电流密度
+         */
+        function initCurrentDensity() {
+            var myChart = echarts.init(document.getElementById('m2d'));
+            var option = {
+
+                 tooltip: {
+                            // trigger: 'axis',
+                            showDelay: 0,
+                            formatter: function (params) {
+                              if (params.value.length > 1) {
+                                return (
+                                  params.seriesName +
+                                  ' :<br/>' +
+                                  +params.value[1] +'V '+ '<br>'
+                                  +params.value[2] + '<br>'
+                                  +params.value[3] + '<br>'
+                                  +params.value[4] + '<br>'
+                                  +params.value[5] + '<br>'
+
+                                );
+                              } else {
+                                return (
+                                  params.seriesName
+
+                                );
+                              }
+                            },
+
+                 },
+                 toolbox: {
+                            feature: {
+                              dataZoom: {},
+                              brush: {
+                                type: ['rect', 'polygon', 'clear']
+                              }
+                            }
+                 },
+                dataZoom: [
+                {
+                  type: 'slider',
+                  show: true,
+                  xAxisIndex: [0],
+
+                  start: 1,
+                  end: 100
+                },
+                {
+                  type: 'slider',
+                  show: true,
+                  yAxisIndex: [0],
+                  left: '96%',
+                  start: 1,
+                  end: 100
+                },
+                {
+                  type: 'inside',
+                  xAxisIndex: [0],
+                  start: 1,
+                  end: 6
+                },
+                {
+                  type: 'inside',
+                  yAxisIndex: [0],
+                  start: 29,
+                  end: 36
+                }
+              ],
+
+              legend: {
+                    data: [],
+                    top: 0
+               },
+
+              xAxis: [
+                    {
+                      type: 'value',
+                      scale: true,
+                      name: 'Date',
+                      nameGap: 5,
+                      nameTextStyle: {
+                              fontSize: 16
+                      },
+
+
+                    }
+              ],
+              yAxis: [
+                    {
+                      type: 'value',
+                      scale: true,
+                      name: 'Current Density',
+                      nameGap: 50,
+                      nameLocation: 'middle',
+                      nameTextStyle: {
+                              fontSize: 16
+                      },
+
+
+                    }
+              ],
+              series: []
+            };
+
+
+            $.ajax({
+                url: '/dc/currentdensity/',
+                type: "get",
+                dataType: "JSON",
+                success: function (res) {
+                    if (res.status) {
+                        option.legend.data = res.data.legend;
+                        option.series = res.data.series_list;
+
+                        myChart.setOption(option);
+                    }
+                }
+            })
+
+
+        }
+
+        /**
+         * dc电荷
+         */
+        function initCharge() {
+            var myChart = echarts.init(document.getElementById('m3'));
+            var option = {
+
+                 tooltip: {
+                            // trigger: 'axis',
+                            showDelay: 0,
+                            formatter: function (params) {
+                              if (params.value.length > 1) {
+                                return (
+                                  params.seriesName +
+                                  ' :<br/>' +
+                                  +params.value[1] +'V '+ '<br>'
+                                  +params.value[2] + '<br>'
+                                  +params.value[3] + '<br>'
+                                  +params.value[4] + '<br>'
+                                  +params.value[5] + '<br>'
+
+                                );
+                              } else {
+                                return (
+                                  params.seriesName
+
+                                );
+                              }
+                            },
+
+                 },
+                 toolbox: {
+                            feature: {
+                              dataZoom: {},
+                              brush: {
+                                type: ['rect', 'polygon', 'clear']
+                              }
+                            }
+                 },
+                dataZoom: [
+                {
+                  type: 'slider',
+                  show: true,
+                  xAxisIndex: [0],
+
+                  start: 1,
+                  end: 100
+                },
+                {
+                  type: 'slider',
+                  show: true,
+                  yAxisIndex: [0],
+                  left: '96%',
+                  start: 1,
+                  end: 100
+                },
+                {
+                  type: 'inside',
+                  xAxisIndex: [0],
+                  start: 1,
+                  end: 6
+                },
+                {
+                  type: 'inside',
+                  yAxisIndex: [0],
+                  start: 29,
+                  end: 36
+                }
+              ],
+
+              legend: {
+                    data: [],
+                    top: 0
+               },
+
+              xAxis: [
+                    {
+                      type: 'value',
+                      scale: true,
+                      name: 'Date',
+                      nameGap: 5,
+                      nameTextStyle: {
+                              fontSize: 16
+                      },
+
+
+                    }
+              ],
+              yAxis: [
+                    {
+                      type: 'value',
+                      scale: true,
+                      name: 'Charge',
+                      nameGap: 50,
+                      nameLocation: 'middle',
+                      nameTextStyle: {
+                              fontSize: 16
+                      },
+
+
+                    }
+              ],
+              series: []
+            };
+
+
+            $.ajax({
+                url: '/dc/charge/',
+                type: "get",
+                dataType: "JSON",
+                success: function (res) {
+                    if (res.status) {
+                        option.legend.data = res.data.legend;
+                        option.series = res.data.series_list;
+
+                        myChart.setOption(option);
+                    }
+                }
+            })
+
+
+        }
+
+        /**
+         * dc电荷密度
+         */
+        function initChargeDensity() {
+            var myChart = echarts.init(document.getElementById('m3d'));
+            var option = {
+
+                 tooltip: {
+                            // trigger: 'axis',
+                            showDelay: 0,
+                            formatter: function (params) {
+                              if (params.value.length > 1) {
+                                return (
+                                  params.seriesName +
+                                  ' :<br/>' +
+                                  +params.value[1] +'V '+ '<br>'
+                                  +params.value[2] + '<br>'
+                                  +params.value[3] + '<br>'
+                                  +params.value[4] + '<br>'
+                                  +params.value[5] + '<br>'
+
+                                );
+                              } else {
+                                return (
+                                  params.seriesName
+
+                                );
+                              }
+                            },
+
+                 },
+                 toolbox: {
+                            feature: {
+                              dataZoom: {},
+                              brush: {
+                                type: ['rect', 'polygon', 'clear']
+                              }
+                            }
+                 },
+                dataZoom: [
+                {
+                  type: 'slider',
+                  show: true,
+                  xAxisIndex: [0],
+
+                  start: 1,
+                  end: 100
+                },
+                {
+                  type: 'slider',
+                  show: true,
+                  yAxisIndex: [0],
+                  left: '96%',
+                  start: 1,
+                  end: 100
+                },
+                {
+                  type: 'inside',
+                  xAxisIndex: [0],
+                  start: 1,
+                  end: 6
+                },
+                {
+                  type: 'inside',
+                  yAxisIndex: [0],
+                  start: 29,
+                  end: 36
+                }
+              ],
+
+              legend: {
+                    data: [],
+                    top: 0
+               },
+
+              xAxis: [
+                    {
+                      type: 'value',
+                      scale: true,
+                      name: 'Date',
+                      nameGap: 5,
+                      nameTextStyle: {
+                              fontSize: 16
+                      },
+
+
+                    }
+              ],
+              yAxis: [
+                    {
+                      type: 'value',
+                      scale: true,
+                      name: 'Charge Density',
+                      nameGap: 50,
+                      nameLocation: 'middle',
+                      nameTextStyle: {
+                              fontSize: 16
+                      },
+
+
+                    }
+              ],
+              series: []
+            };
+
+
+            $.ajax({
+                url: '/dc/chargedensity/',
+                type: "get",
+                dataType: "JSON",
+                success: function (res) {
+                    if (res.status) {
+                        option.legend.data = res.data.legend;
+                        option.series = res.data.series_list;
+
+                        myChart.setOption(option);
+                    }
+                }
+            })
+
+
+        }
+        /**
+         * dc电荷密度
+         */
+        function initPower() {
+            var myChart = echarts.init(document.getElementById('m4'));
+            var option = {
+
+                 tooltip: {
+                            // trigger: 'axis',
+                            showDelay: 0,
+                            formatter: function (params) {
+                              if (params.value.length > 1) {
+                                return (
+                                  params.seriesName +
+                                  ' :<br/>' +
+                                  +params.value[1] +'V '+ '<br>'
+                                  +params.value[2] + '<br>'
+                                  +params.value[3] + '<br>'
+                                  +params.value[4] + '<br>'
+                                  +params.value[5] + '<br>'
+
+                                );
+                              } else {
+                                return (
+                                  params.seriesName
+
+                                );
+                              }
+                            },
+
+                 },
+                 toolbox: {
+                            feature: {
+                              dataZoom: {},
+                              brush: {
+                                type: ['rect', 'polygon', 'clear']
+                              }
+                            }
+                 },
+                dataZoom: [
+                {
+                  type: 'slider',
+                  show: true,
+                  xAxisIndex: [0],
+
+                  start: 1,
+                  end: 100
+                },
+                {
+                  type: 'slider',
+                  show: true,
+                  yAxisIndex: [0],
+                  left: '96%',
+                  start: 1,
+                  end: 100
+                },
+                {
+                  type: 'inside',
+                  xAxisIndex: [0],
+                  start: 1,
+                  end: 6
+                },
+                {
+                  type: 'inside',
+                  yAxisIndex: [0],
+                  start: 29,
+                  end: 36
+                }
+              ],
+
+              legend: {
+                    data: [],
+                    top: 0
+               },
+
+              xAxis: [
+                    {
+                      type: 'value',
+                      scale: true,
+                      name: 'Date',
+                      nameGap: 5,
+                      nameTextStyle: {
+                              fontSize: 16
+                      },
+
+
+                    }
+              ],
+              yAxis: [
+                    {
+                      type: 'value',
+                      scale: true,
+                      name: 'Power',
+                      nameGap: 50,
+                      nameLocation: 'middle',
+                      nameTextStyle: {
+                              fontSize: 16
+                      },
+
+
+                    }
+              ],
+              series: []
+            };
+
+
+            $.ajax({
+                url: '/dc/power/',
+                type: "get",
+                dataType: "JSON",
+                success: function (res) {
+                    if (res.status) {
+                        option.legend.data = res.data.legend;
+                        option.series = res.data.series_list;
+
+                        myChart.setOption(option);
+                    }
+                }
+            })
+
+
+        }
+
+
+
+    </script>
+{% endblock %}

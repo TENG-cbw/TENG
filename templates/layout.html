@@ -1,0 +1,119 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap-3.4.1/css/bootstrap.min.css' %}">
+    <style>
+        .navbar {
+            border-radius: 0;
+        }
+    </style>
+    {% block css %}{% endblock %}
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"> TENG Database Management System </a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Main <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/chart/list/">Main Chart</a></li>
+                        <li><a href="/chart/highcharts/">highcharts</a></li>
+                        <li><a href="/main/list/">Main list</a></li>
+                        <li><a href="/main/upload">Main Upload</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Solid-Liquid <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/sl/chart/">S-L Chart</a></li>
+                        <li><a href="/sl/list/">S-L List</a></li>
+                        <li><a href="/sl/upload/">S-L Upload</a></li>
+
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Direct-Current <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/dc/chart/">D-C Chart</a></li>
+                        <li><a href="/dc/list/">D-C List</a></li>
+                        <li><a href="/dc/upload/">D-C Upload</a></li>
+
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">MFCFP <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/mfcfp/chart/">MFCFP Chart</a></li>
+                        <li><a href="/mfcfp/list/">MFCFP list</a></li>
+                        <li><a href="/mfcfp/upload/">MFCFP Upload</a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Structure <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/structure/chart/">S Chart</a></li>
+                        <li><a href="/structure/list/">S List</a></li>
+                        <li><a href="/structure/upload/">S Upload</a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Summary <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/summary/chart/">Summary Chart</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="/essay/list/">Data Management</a></li>
+
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">CBW <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Personal Data</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Log Out</a></li>
+                        <li><a href="#">Log In</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div>
+    {% block content %}{% endblock %}
+</div>
+
+
+<script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'plugins/bootstrap-3.4.1/js/bootstrap.min.js' %}"></script>
+{% block js %}{% endblock %}
+</body>
+</html>

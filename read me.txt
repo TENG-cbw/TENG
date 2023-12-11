@@ -1,0 +1,3 @@
+Front end integration: HTML/BootStrap/fontawesome/jQuery/JavaScript
+Database:MySQL
+Backend integration:pymysql/mysqlclient/Django/pillow/json/openpyxl/requests/bs4/django etc

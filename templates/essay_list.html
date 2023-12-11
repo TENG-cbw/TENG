@@ -1,0 +1,91 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                Batch Upload
+            </div>
+            <div class="panel-body">
+                <form method="post" enctype="multipart/form-data" action="/essay/multi/">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="file" name="exc">
+                    </div>
+                    <input type="submit" value="Submit" class="btn btn-info btn-sm">
+                </form>
+            </div>
+        </div>
+    <div class="container">
+        <div style="margin-bottom: 10px" class="clearfix">
+            <a class="btn btn-success" href="/essay/add/">
+                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                Add Data
+            </a>
+
+            <div style="float: right;width: 300px;">
+                <form method="get">
+                    <div class="input-group">
+                        <input type="text" name="q" class="form-control" placeholder="Search for..."
+                               value="{{ search_data }}">
+                        <span class="input-group-btn">
+                        <button class="btn btn-default" type="submit">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                        </button>
+                      </span>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                TENG Data List
+            </div>
+
+            <!-- Table -->
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Corresponding author</th>
+                    <th>Publication Date</th>
+                    <th>DOI</th>
+                    <th>Manage</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for obj in queryset %}
+                    <tr>
+                        <td>{{ obj.Ref_Corresponding_author }}</td>
+                        <td>{{ obj.Ref_Publication_date }}</td>
+                        <td>{{ obj.Ref_DOI_number }}</td>
+                        <td>
+                            <a class="btn btn-primary btn-xs" href="/essay/{{ obj.id }}/edit/">Edit</a>
+                            <a class="btn btn-danger btn-xs" href="/essay/delete/?nid={{ obj.id }}">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+        <div class="clearfix">
+            <ul class="pagination">
+                {{ page_string }}
+            </ul>
+
+        </div>
+
+    </div>
+{% endblock %}
+
+
+
+
+
+

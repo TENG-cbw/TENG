@@ -1,0 +1,48 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <div class="container">
+
+        <div style="margin-bottom: 10px">
+            <a class="btn btn-success" href="/dc/upload/">
+                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                Add D-C Image
+            </a>
+        </div>
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                Main List
+            </div>
+
+            <!-- Table -->
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+
+                    <th>Ref_Publication_date</th>
+                    <th>DOI</th>
+                    <th>Image</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for obj in queryset %}
+                    <tr>
+
+                        <td>{{ obj.Ref_Publication_date }}</td>
+                        <td>{{ obj.DOI }}</td>
+                        <td>
+                            <img src="/media/{{ obj.img }}" style="height: 300px;width:600px">
+                        </td>
+                        <td>
+
+                            <a class="btn btn-danger btn-xs" href="/dc/delete/?nid={{ obj.id }}">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
